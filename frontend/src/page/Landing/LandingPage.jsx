@@ -78,8 +78,7 @@ export default function LandingPage({ isAboutMode = false, onClose }) {
       {/* ── NAV ── */}
       <nav className={`lp-nav ${isMobileMenuOpen ? 'menu-open' : ''}`}>
         <a href="/" className="lp-nav-logo" onClick={e => e.preventDefault()}>
-          <img src="/image.png" alt="Terminal" />
-          <span>TERMINAL</span>
+          <img src="/image.png" alt="Logo" />
         </a>
         <div className="lp-nav-links">
           <a href="#features">Features</a>

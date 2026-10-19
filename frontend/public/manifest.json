@@ -1,7 +1,7 @@
 {
-  "name": "Terminal",
-  "short_name": "Terminal",
-  "description": "Terminal Trading Platform",
+  "name": "DL",
+  "short_name": "DL",
+  "description": "DL Trading Platform",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",

@@ -1,5 +1,5 @@
-// Service Worker for Terminal PWA
-const CACHE_NAME = 'terminal-cache-v2';
+// Service Worker for DL PWA
+const CACHE_NAME = 'dl-cache-v3';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
