@@ -59,7 +59,7 @@ const handleUserLogin = asyncHandler(async (req, res) => {
   let role = '';
   let attachedMongoBrokerId = null;       // Broker का Mongo _id (customer के case में attached broker)
   let associatedBrokerStringId = null;    // Broker का 10-digit login_id (string)
-  let organizationName = "DHANLAXMI";     // Default Organization Name
+  let organizationName = "TERMINAL";     // Default Organization Name
   let parentId = null;
 
   // 1) Try Broker/Admin first (by login_id)
@@ -76,7 +76,9 @@ const handleUserLogin = asyncHandler(async (req, res) => {
         orgNameFromDB: user.organization_name,
         allKeys: Object.keys(user.toObject())
     });
-    if (user.organization_name) organizationName = user.organization_name;
+    if (user.organization_name && user.organization_name.toUpperCase() !== 'DHANLAXMI') {
+      organizationName = user.organization_name;
+    }
   }
 
   // 2) Else try Customer (by customer_id)
@@ -93,7 +95,9 @@ const handleUserLogin = asyncHandler(async (req, res) => {
         const brokerDetail = await BrokerModel.findById(attachedMongoBrokerId).select('login_id organization_name');
         if (brokerDetail) {
              associatedBrokerStringId = brokerDetail.login_id;
-             if (brokerDetail.organization_name) organizationName = brokerDetail.organization_name;
+             if (brokerDetail.organization_name && brokerDetail.organization_name.toUpperCase() !== 'DHANLAXMI') {
+               organizationName = brokerDetail.organization_name;
+             }
         }
       }
     }

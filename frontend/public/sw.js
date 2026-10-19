@@ -1,5 +1,5 @@
-// Service Worker for DhanLaxmi PWA
-const CACHE_NAME = 'dhanlaxmi-cache-v1';
+// Service Worker for Terminal PWA
+const CACHE_NAME = 'terminal-cache-v2';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();

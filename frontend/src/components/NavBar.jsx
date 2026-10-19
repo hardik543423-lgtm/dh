@@ -56,7 +56,12 @@ const NavBar = () => {
                     <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-indigo-500/30 shadow-lg">
                         <img src="/image.png" alt="Logo" className="w-full h-full object-cover" />
                     </div>
-                    <span className="text-xl font-bold text-[var(--text-primary)]">{localStorage.getItem('organizationName') || 'DHANLAXMI'}</span>
+                    <span className="text-xl font-bold text-[var(--text-primary)]">
+                        {(() => {
+                            const org = localStorage.getItem('organizationName');
+                            return (!org || org.toUpperCase() === 'DHANLAXMI') ? 'TERMINAL' : org;
+                        })()}
+                    </span>
                 </div>
                 <nav className="flex space-x-6">
                     {NAV_ITEMS.map(item => (

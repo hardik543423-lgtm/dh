@@ -78,8 +78,8 @@ export default function LandingPage({ isAboutMode = false, onClose }) {
       {/* ── NAV ── */}
       <nav className={`lp-nav ${isMobileMenuOpen ? 'menu-open' : ''}`}>
         <a href="/" className="lp-nav-logo" onClick={e => e.preventDefault()}>
-          <img src="/image.png" alt="DhanLaxmi" />
-          <span>DHANLAXMI</span>
+          <img src="/image.png" alt="Terminal" />
+          <span>TERMINAL</span>
         </a>
         <div className="lp-nav-links">
           <a href="#features">Features</a>
@@ -155,7 +155,7 @@ export default function LandingPage({ isAboutMode = false, onClose }) {
             </h1>
             <p>
               Experience next-generation trading infrastructure built for speed, reliability, 
-              DhanLaxmi Capital delivers institutional-grade execution for every trader. 
+              Terminal delivers institutional-grade execution for every trader. 
               Zero brokerage on delivery, intuitive charts, and blazing fast order routing.
             </p>
             {!isAboutMode && (
@@ -205,7 +205,7 @@ export default function LandingPage({ isAboutMode = false, onClose }) {
           <div className="lp-stat-label">Max Leverage</div>
         </div>
         <div className="lp-footer-bottom">
-          <div className="lp-footer-copy">© 2026 DhanLaxmi Capital Pvt. Ltd.</div>
+          <div className="lp-footer-copy">© 2026 Terminal Technologies Pvt. Ltd.</div>
           {/* <div className="lp-footer-legal">
             SEBI Registration No: INZ000000000 | NSE Member Code: 00000
           </div> */}
@@ -233,7 +233,7 @@ export default function LandingPage({ isAboutMode = false, onClose }) {
       <section className="lp-features" id="terms" style={{ background: 'var(--bg-2)', paddingTop: '4rem', paddingBottom: '4rem' }}>
         <div className="lp-section-head lp-fade-up">
           <h2>Terms & <span className="lp-gradient-text">Conditions</span></h2>
-          <p>Please read these terms carefully before trading with DhanLaxmi Trading App.</p>
+          <p>Please read these terms carefully before trading with Terminal Trading App.</p>
         </div>
 
         <div className="lp-terms-container lp-fade-up" style={{ maxWidth: '900px', margin: '0 auto', padding: '0 5%' }}>
@@ -300,7 +300,7 @@ export default function LandingPage({ isAboutMode = false, onClose }) {
         <section className="lp-cta lp-fade-up" id="cta">
           <div className="lp-cta-text">
             <h2>Ready to Upgrade Your Trading?</h2>
-            <p>Join thousands of traders who trust DhanLaxmi Capital for fast execution, low costs, and premium support.</p>
+            <p>Join thousands of traders who trust Terminal for fast execution, low costs, and premium support.</p>
             <button className="lp-btn lp-btn-primary" onClick={() => navigate('/login')} style={{ position: 'relative' }}>
               Create Free Account
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
@@ -312,8 +312,8 @@ export default function LandingPage({ isAboutMode = false, onClose }) {
       {/* ── FOOTER ── */}
       <footer className="lp-footer">
           <div className="lp-nav-logo">
-          <img src="/landing-logo.png" alt="DhanLaxmi" />
-          <span>DhanLaxmi</span>
+          <img src="/landing-logo.png" alt="Terminal" />
+          <span>Terminal</span>
         </div>
           <div className="lp-footer-links">
             <a href="#terms">Terms</a>
@@ -321,7 +321,7 @@ export default function LandingPage({ isAboutMode = false, onClose }) {
             <a href="#risk">Risk Disclosure</a>
             <a href="#fees">Fees</a>
           </div>
-          <div className="lp-footer-copy">© 2026 DhanLaxmi Capital Pvt. Ltd.</div>
+          <div className="lp-footer-copy">© 2026 Terminal Technologies Pvt. Ltd.</div>
         </footer>
     </div>
   );

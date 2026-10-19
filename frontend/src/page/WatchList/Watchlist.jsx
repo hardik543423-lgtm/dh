@@ -1079,7 +1079,8 @@ function Watchlist() {
   const userString = localStorage.getItem('loggedInUser');
   const userObject = userString ? JSON.parse(userString) : {};
   const userRole = userObject.role;
-  const organizationName = localStorage.getItem('organizationName') || 'DHANLAXMI';
+  const orgStorage = localStorage.getItem('organizationName');
+  const organizationName = (!orgStorage || orgStorage.toUpperCase() === 'DHANLAXMI') ? 'TERMINAL' : orgStorage;
   return (
     <div className="w-full h-full bg-[var(--bg-primary)] md:w-1/2 lg:w-3/12 md:border-r border-[var(--border-light)] flex flex-col relative min-h-0">
 

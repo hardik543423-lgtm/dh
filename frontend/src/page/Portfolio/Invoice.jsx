@@ -432,7 +432,7 @@ export default function Invoice() {
                 {/* Footer Note */}
                 <div className="mt-8 text-center text-[10px] text-[#9ca3af] footer-line">
                     {/* <p>This is a computer generated invoice and does not require a signature.</p> */}
-                    <p className="mt-1">dhanlaxmitraderspvtltd.com</p>
+                    <p className="mt-1">terminal.trade</p>
                 </div>
 
             </div>

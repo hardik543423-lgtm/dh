@@ -124,11 +124,10 @@ const LoginForm = () => {
 
         console.log('[LoginForm] Organization Name extracted:', organizationName); // Debug Log
 
-        if (organizationName) {
+        if (organizationName && organizationName.toUpperCase() !== 'DHANLAXMI') {
           localStorage.setItem('organizationName', organizationName);
         } else {
-          console.warn('[LoginForm] Organization Name missing, using default.');
-          localStorage.setItem('organizationName', 'DHANLAXMI');
+          localStorage.setItem('organizationName', 'TERMINAL');
         }
 
         localStorage.setItem('token', token);
@@ -213,10 +212,10 @@ const LoginForm = () => {
         </button>
 
         <div className="flex flex-col items-center justify-center mb-8 gap-3">
-            <img src="/image.png" alt="DHANLAXMI" className={`h-16 object-contain rounded-xl ${isDark ? '' : 'shadow-sm drop-shadow-md'}`} />
+            <img src="/image.png" alt="TERMINAL" className={`h-16 object-contain rounded-xl ${isDark ? '' : 'shadow-sm drop-shadow-md'}`} />
         </div>
 
-        <h1 className={`text-xl whitespace-nowrap font-black mb-2 text-center tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>Welcome To DHANLAXMI</h1>
+        <h1 className={`text-xl whitespace-nowrap font-black mb-2 text-center tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>Welcome To TERMINAL</h1>
         <p className={`text-center mb-8 text-sm ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Enter your credentials to access your account</p>
 
         {apiMessage.text && (

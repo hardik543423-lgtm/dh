@@ -1,7 +1,7 @@
 {
-  "name": " ",
-  "short_name": " ",
-  "description": "Premium Trading Platform",
+  "name": "Terminal",
+  "short_name": "Terminal",
+  "description": "Terminal Trading Platform",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",

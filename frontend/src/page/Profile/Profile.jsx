@@ -11,7 +11,6 @@ import LandingPage from "../Landing/LandingPage.jsx";
 
 export default function Profile() {
   const [showAbout, setShowAbout] = useState(false);
-  const [showInstallModal, setShowInstallModal] = useState(false);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { theme, toggleTheme, isDark } = useTheme();
@@ -108,10 +107,7 @@ export default function Profile() {
   }, [viewingCustomerId, token, apiBase]);
 
   const handleInstallClick = async () => {
-    const success = await installPWA();
-    if (!success) {
-      setShowInstallModal(true);
-    }
+    await installPWA();
   };
 
   const handleLogout = () => {
@@ -175,62 +171,6 @@ export default function Profile() {
 
   return (
     <div className="bg-[var(--bg-primary)] min-h-screen text-[var(--text-primary)] pb-24">
-
-      {/* ═══════════ INSTALL INSTRUCTIONS MODAL ═══════════ */}
-      {showInstallModal && (
-        <div
-          className="fixed inset-0 z-[200] flex items-end justify-center"
-          style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }}
-          onClick={() => setShowInstallModal(false)}
-        >
-          <div
-            className="w-full max-w-md bg-[var(--bg-secondary)] rounded-t-3xl p-6 pb-10 border-t border-[var(--border-color)] shadow-2xl"
-            onClick={e => e.stopPropagation()}
-            style={{ animation: 'slideUp 0.25s ease-out' }}
-          >
-            <div className="flex items-center justify-between mb-5">
-              <h3 className="text-base font-bold">Install App on Your Device</h3>
-              <button onClick={() => setShowInstallModal(false)} className="w-8 h-8 rounded-full bg-[var(--bg-primary)] flex items-center justify-center">
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Android / Chrome */}
-            <div className="mb-4">
-              <p className="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-2">Android / Chrome</p>
-              <div className="bg-[var(--bg-primary)] rounded-2xl p-4 border border-[var(--border-color)] space-y-2.5">
-                {[
-                  { step: '1', text: 'Tap the ⋮ (3-dot menu) at top-right of Chrome' },
-                  { step: '2', text: 'Tap "Add to Home Screen"' },
-                  { step: '3', text: 'Tap "Add" in the popup — Done! ✅' },
-                ].map(({ step, text }) => (
-                  <div key={step} className="flex items-start gap-3">
-                    <span className="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{step}</span>
-                    <p className="text-sm text-[var(--text-secondary)]">{text}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* iOS / Safari */}
-            <div>
-              <p className="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-2">iPhone / Safari</p>
-              <div className="bg-[var(--bg-primary)] rounded-2xl p-4 border border-[var(--border-color)] space-y-2.5">
-                {[
-                  { step: '1', text: 'Tap the Share button (□↑) at bottom of Safari' },
-                  { step: '2', text: 'Scroll down and tap "Add to Home Screen"' },
-                  { step: '3', text: 'Tap "Add" — Done! ✅' },
-                ].map(({ step, text }) => (
-                  <div key={step} className="flex items-start gap-3">
-                    <span className="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{step}</span>
-                    <p className="text-sm text-[var(--text-secondary)]">{text}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
       {/* Header */}
       <div className="sticky top-0 z-10 bg-[var(--bg-primary)] border-b border-[var(--border-color)]">
         <div className="flex items-center justify-between px-4 py-3 max-w-xl mx-auto">
