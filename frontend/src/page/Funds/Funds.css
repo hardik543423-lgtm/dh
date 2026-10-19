@@ -1,0 +1,279 @@
+:root {
+  --funds-card-bg: var(--bg-secondary);
+  --funds-accent: #3b82f6;
+  --funds-success: #10b981;
+  --funds-danger: #ef4444;
+  --funds-warning: #f59e0b;
+  --funds-card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.funds-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 16px;
+  padding-bottom: 140px; /* Increased padding to clear bottom nav */
+  min-height: 100vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Header Styling - More Premium */
+.section-header {
+  margin-bottom: 28px;
+  padding: 8px 4px;
+}
+
+.section-header h1 {
+  font-size: 2.2rem;
+  font-weight: 850;
+  color: var(--text-primary);
+  letter-spacing: -1.2px;
+  margin-bottom: 6px;
+  background: linear-gradient(135deg, var(--text-primary) 60%, var(--funds-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-header p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+/* New Stacked Card Style */
+.large-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  padding: 24px;
+  margin-bottom: 16px;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--funds-card-shadow);
+}
+
+.large-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.dark-card {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border: none;
+  color: white !important;
+  box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4);
+}
+
+.dark-card .stat-label, 
+.dark-card .stat-value,
+.dark-card .sub-label {
+  color: white !important;
+}
+
+.card-icon-wrapper {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  opacity: 0.6;
+}
+
+.card-icon-wrapper svg {
+  width: 16px;
+  height: 16px;
+}
+
+.dark-card .card-icon-wrapper {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.stat-value {
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text-primary);
+  letter-spacing: -1px;
+}
+
+.sub-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+  display: block;
+}
+
+/* Action Buttons (Top) */
+.action-grid-top {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.top-btn {
+  padding: 12px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-add {
+  background: #3b82f6;
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-add:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.btn-withdraw {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+/* Margin Details (White Card Style) */
+.details-container-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: var(--funds-card-shadow);
+}
+
+.details-header-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.margin-item {
+  margin-bottom: 20px;
+}
+
+.margin-item:last-child {
+  margin-bottom: 0;
+}
+
+.margin-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.margin-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.margin-value {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.progress-thin {
+  height: 6px;
+  background: var(--bg-primary);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--funds-accent);
+  border-radius: 3px;
+}
+
+/* Segmented Indicator */
+.segmented-bar {
+  display: flex;
+  gap: 4px;
+  height: 6px;
+}
+
+.segment {
+  flex: 1;
+  background: var(--bg-primary);
+  border-radius: 2px;
+}
+
+.segment.active-low { background: var(--funds-success); }
+.segment.active-med { background: var(--funds-warning); }
+.segment.active-high { background: var(--funds-danger); }
+
+/* Skeleton Loader Styles */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary) 25%,
+    var(--bg-primary) 50%,
+    var(--bg-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 12px;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton-text { height: 16px; margin-bottom: 8px; border-radius: 4px; }
+.skeleton-title { height: 32px; width: 60%; margin-bottom: 12px; }
+.skeleton-card { height: 120px; border-radius: 24px; margin-bottom: 16px; }
+.skeleton-button { height: 48px; border-radius: 14px; }
+.skeleton-badge { height: 28px; width: 100px; border-radius: 20px; }
+
+/* Existing Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-up {
+  animation: fadeInUp 0.4s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* New Margin Section Group */
+.margin-section-group {
+  transition: all 0.2s ease;
+}
+
+.margin-section-group:hover {
+  background: var(--bg-secondary);
+  border-color: var(--funds-accent);
+}
+
+/* Utilities */
+.col-span-2 { grid-column: span 2 / span 2; }
+.font-black { font-weight: 900; }
