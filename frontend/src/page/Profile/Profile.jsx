@@ -107,10 +107,7 @@ export default function Profile() {
   }, [viewingCustomerId, token, apiBase]);
 
   const handleInstallClick = async () => {
-    const success = await installPWA();
-    if (!success) {
-      alert("App installation is not supported by your browser or already installed. You can manually 'Add to Home Screen' from browser menu.");
-    }
+    await installPWA();
   };
 
   const handleLogout = () => {
