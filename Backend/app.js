@@ -58,6 +58,7 @@ export function createApp() {
     "https://www.dhanlaxmibrokerage.in",
     "dhanlaxmibrokerage.in",
     "https://dh-front-vvwx.onrender.com",
+    "https://terminal-workplace.com",
     "terminal-workplace.com",
     
     process.env.FRONTEND_URL,      // Allowed frontend URL from env
