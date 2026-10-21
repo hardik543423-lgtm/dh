@@ -35,8 +35,9 @@ export function startAutoLoginCron() {
             }
 
             // Check if token is still valid
-            const credential = await KiteCredential.findOne({ is_active: true }).lean();
+            const credential = await KiteCredential.getActive(true);
             if (credential?.token_expiry) {
+
                 const expiry = new Date(credential.token_expiry);
                 const now = new Date();
                 const hoursRemaining = (expiry - now) / (1000 * 60 * 60);
@@ -84,9 +85,10 @@ export async function checkAndRefreshOnStartup() {
             return;
         }
 
-        const credential = await KiteCredential.findOne({ is_active: true }).lean();
+        const credential = await KiteCredential.getActive(true);
 
         if (!credential) {
+
             console.log('[AutoLoginCron] No active credentials found');
             return;
         }

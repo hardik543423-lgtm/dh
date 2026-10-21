@@ -10,9 +10,10 @@ const BASE_URL = 'https://api.kite.trade';
  * Get active Kite credentials from database
  */
 async function getKiteCredentials() {
-    const credential = await KiteCredential.findOne({ is_active: true }).lean();
+    const credential = await KiteCredential.getActive(true);
 
     if (!credential || !credential.api_key || !credential.access_token) {
+
         throw new Error('No active Kite credentials found. Please login first.');
     }
 

@@ -35,9 +35,10 @@ export class KiteWebSocket {
   async connect() {
     try {
       // Fetch credentials from database
-      const credential = await KiteCredential.findOne({ is_active: true }).lean();
+      const credential = await KiteCredential.getActive(true);
 
       if (!credential) {
+
         console.error("[KiteWS] FATAL: No active Kite credentials found in database.");
         console.error("   Please login via /api/kite/login-url first.");
         return;

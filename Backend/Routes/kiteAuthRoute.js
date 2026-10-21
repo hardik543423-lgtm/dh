@@ -127,8 +127,15 @@ router.get('/callback', async (req, res) => {
       { upsert: true, new: true }
     );
 
+    // Deactivate all other credentials
+    await KiteCredential.updateMany(
+      { api_key: { $ne: apiKey } },
+      { $set: { is_active: false } }
+    );
+
     // Update environment variable in memory for current session
     process.env.KITE_ACCESS_TOKEN = tokenData.access_token;
+
 
     console.log(`[KiteAuth] ✅ Token obtained for user ${tokenData.user_id}`);
     console.log(`[KiteAuth]    Access Token: ${tokenData.access_token.substring(0, 10)}...`);
@@ -183,7 +190,7 @@ router.get('/callback', async (req, res) => {
 // Get current token status
 router.get('/status', async (req, res) => {
   try {
-    const credential = await KiteCredential.findOne({ is_active: true }).lean();
+    const credential = await KiteCredential.getActive(true);
 
     if (!credential) {
       return res.json({
@@ -225,7 +232,8 @@ router.get('/status', async (req, res) => {
 // Get access token from database (for internal use)
 router.get('/token', async (req, res) => {
   try {
-    const credential = await KiteCredential.findOne({ is_active: true }).lean();
+    const credential = await KiteCredential.getActive(true);
+
 
     if (!credential || !credential.access_token) {
       return res.status(404).json({
@@ -260,13 +268,13 @@ router.get('/token', async (req, res) => {
 // Logout - invalidate access token
 router.post('/logout', async (req, res) => {
   try {
-    const credential = await KiteCredential.findOne({ is_active: true });
+    const credential = await KiteCredential.getActive();
 
     if (!credential || !credential.access_token) {
       return res.json({ success: true, message: 'No active session to logout' });
     }
 
-    const apiKey = process.env.KITE_API_KEY;
+    const apiKey = process.env.KITE_API_KEY || credential.api_key;
 
     // Invalidate token on Kite's end
     try {
@@ -313,7 +321,8 @@ import {
 // GET /api/kite/totp/generate
 router.get('/totp/generate', protect, adminOnly, async (req, res) => {
   try {
-    const credential = await KiteCredential.findOne({ is_active: true }).lean();
+    const credential = await KiteCredential.getActive(true);
+
 
     if (!credential || !credential.totp_secret) {
       return res.status(404).json({
@@ -434,16 +443,17 @@ router.post('/auto-login/toggle', protect, adminOnly, async (req, res) => {
       });
     }
 
-    await KiteCredential.updateOne(
-      { is_active: true },
-      { auto_login_enabled: enabled }
-    );
+    const activeCred = await KiteCredential.getActive();
+    if (activeCred) {
+      await KiteCredential.findByIdAndUpdate(activeCred._id, { auto_login_enabled: enabled });
+    }
 
     res.json({
       success: true,
       message: `Auto-login ${enabled ? 'enabled' : 'disabled'}`,
       auto_login_enabled: enabled
     });
+
 
   } catch (error) {
     console.error('[KiteAuth] Auto-login toggle error:', error);

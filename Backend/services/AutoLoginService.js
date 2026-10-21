@@ -110,7 +110,9 @@ export async function performAutoLogin(credential) {
             method: 'GET',
             redirect: 'manual',
             headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                'Accept-Language': 'en-US,en;q=0.9'
             }
         });
 
@@ -124,7 +126,9 @@ export async function performAutoLogin(credential) {
         Object.assign(allCookies, parseCookies(loginPageResponse));
 
         if (!sess_id) {
-            throw new Error('Could not get sess_id from login page');
+            const bodyPreview = (await loginPageResponse.text().catch(() => '')).substring(0, 200);
+            console.error(`[AutoLogin] Step 1 failed! Status: ${loginPageResponse.status} ${loginPageResponse.statusText}, Location: ${redirectUrl}, Body: ${bodyPreview}`);
+            throw new Error(`Could not get sess_id from login page (status: ${loginPageResponse.status})`);
         }
 
         console.log('[AutoLogin] Got sess_id:', sess_id.substring(0, 10) + '...');
@@ -287,9 +291,10 @@ export async function runAutoLogin() {
     console.log('[AutoLogin] Time:', new Date().toISOString());
     console.log('[AutoLogin] ═══════════════════════════════════════');
 
+    let credential = null;
     try {
-        // Get active credential
-        const credential = await KiteCredential.findOne({ is_active: true });
+        // Get active credential matching current KITE_API_KEY if configured
+        credential = await KiteCredential.getActive();
 
         if (!credential) {
             throw new Error('No active Kite credentials found');
@@ -317,8 +322,15 @@ export async function runAutoLogin() {
                 login_time: new Date(result.login_time),
                 token_expiry: expiry,
                 last_auto_login: new Date(),
-                auto_login_error: null
+                auto_login_error: null,
+                is_active: true
             });
+
+            // Ensure all other credentials are marked inactive
+            await KiteCredential.updateMany(
+                { _id: { $ne: credential._id } },
+                { $set: { is_active: false } }
+            );
 
             console.log('[AutoLogin] ✅ Database updated with new token');
             console.log('[AutoLogin]    Token expires:', expiry.toISOString());
@@ -338,15 +350,22 @@ export async function runAutoLogin() {
     } catch (error) {
         console.error('[AutoLogin] ❌ Auto-login failed:', error.message);
 
-        // Update error in database
+        // Update error in database on specific credential
         try {
-            await KiteCredential.updateOne(
-                { is_active: true },
-                {
+            if (credential?._id) {
+                await KiteCredential.findByIdAndUpdate(credential._id, {
                     auto_login_error: error.message,
                     last_auto_login: new Date()
-                }
-            );
+                });
+            } else {
+                await KiteCredential.updateOne(
+                    { is_active: true },
+                    {
+                        auto_login_error: error.message,
+                        last_auto_login: new Date()
+                    }
+                );
+            }
         } catch (dbError) {
             console.error('[AutoLogin] Failed to update error in DB:', dbError.message);
         }
@@ -364,7 +383,7 @@ export async function runAutoLogin() {
  * @param {string} totpSecret - TOTP secret (will be encrypted)
  */
 export async function setupAutoLoginCredentials(password, totpSecret) {
-    const credential = await KiteCredential.findOne({ is_active: true });
+    const credential = await KiteCredential.getActive();
 
     if (!credential) {
         throw new Error('No active Kite credentials found. Please login manually first.');
@@ -386,7 +405,7 @@ export async function setupAutoLoginCredentials(password, totpSecret) {
  * Check if auto-login is configured
  */
 export async function isAutoLoginConfigured() {
-    const credential = await KiteCredential.findOne({ is_active: true }).lean();
+    const credential = await KiteCredential.getActive(true);
 
     if (!credential) {
         return { configured: false, reason: 'No active credentials' };
@@ -399,3 +418,4 @@ export async function isAutoLoginConfigured() {
         lastError: credential.auto_login_error
     };
 }
+
